@@ -1,0 +1,44 @@
+### EJEMPLO VOLCADO > JAVA - POSTGRES
+
+Este ejemplo requiere únicamente de docker
+
+Puedes descargar docker aquí: https://docs.docker.com/engine/install/
+
+Debes instalar también el plugin compose: https://docs.docker.com/compose/install/
+.
+├── app
+│   ├── Dockerfile.app
+│   ├── java-client-1.0-SNAPSHOT.jar
+│   ├── Main.java
+│   └── postgresql-42.6.0.jar
+├── daemon
+├── db
+│   └── 01-init.sh
+├── README
+└── services.yml
+
+2 directories, 8 files
+
+El directorio `app` contiene la aplicación de Java `Main.java`.
+
+Para más información sobre los comandos disponibles consulta: 
+https://github.com/Einabit/client.java
+
+El fichero daemon es un script que permite iniciar el proyecto en modo producción y 
+pruebas.
+
+```bash
+# producción
+./daemon
+```
+```bash
+# pruebas
+./daemon mock
+```
+
+El script inicializará los servicios de Java y Posgres. Si seleccionamos el modo 
+pruebas (mock) un servicio sandbox será inicializado también y aceptará las consutlas 
+en lugar de ir al servidor de producción.
+
+Al cancelar la ejecución usando "CTRL + C" el script mostrará los datos almacenados en 
+la base de datos de postgres antes de tumbar los servicios.

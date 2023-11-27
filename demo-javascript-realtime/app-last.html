@@ -1,0 +1,85 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>EINABIT GPS DEMO</title>
+      <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+      <style>
+        html, body {
+          margin: 0;
+          height: 100%;
+        }
+        #map {
+          width: 100vw;
+          height: 100vh;
+        }
+
+        tbody td {
+          text-align: center;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script>
+
+        const positions = %POSITIONS;
+
+        const map = new ol.Map({
+          target: "map",
+          layers: [
+            new ol.layer.Tile({
+              source: new ol.source.OSM()
+            })
+          ],
+          view: new ol.View({
+            center: ol.proj.fromLonLat(positions[0]),
+            zoom: 18
+          })
+        });
+
+        positions.forEach((loc) => {
+          const marker = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat(loc))
+          });
+
+          const vectorSource = new ol.source.Vector({
+            features: [marker]
+          });
+
+          const vectorLayer = new ol.layer.Vector({
+            source: vectorSource
+          });
+
+          map.addLayer(vectorLayer);
+        });
+
+        const lineString = new ol.geom.LineString(positions.map(loc => ol.proj.fromLonLat(loc, "EPSG:3857")));
+        const lineFeature = new ol.Feature({
+          geometry: lineString
+        });
+
+        const lineStyle = new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: "red",
+            width: 2
+          })
+        });
+
+        lineFeature.setStyle(lineStyle);
+
+        const vectorSource = new ol.source.Vector({
+          features: [lineFeature]
+        });
+
+        const vectorLayer = new ol.layer.Vector({
+          source: vectorSource
+        });
+
+        map.addLayer(vectorLayer);
+      </script>
+    </body>
+  </html>

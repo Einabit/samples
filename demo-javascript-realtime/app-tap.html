@@ -1,0 +1,83 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>EINABIT GPS DEMO</title>
+      <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+      <style>
+        html, body {
+          margin: 0;
+          height: 100%;
+        }
+        #map {
+          width: 100vw;
+          height: 100vh;
+        }
+
+        tbody td {
+          text-align: center;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script>
+
+        const mapView = new ol.View({ zoom: 16 });
+
+        const latlng = ol.proj.fromLonLat([0, 0]);
+        const pointerGeometry = new ol.geom.Point(latlng);
+        const pointerFeature = new ol.Feature(pointerGeometry);
+
+        const map = new ol.Map({
+          target: "map",
+          layers: [
+            new ol.layer.Tile({
+              source: new ol.source.OSM()
+            })
+          ],
+          view: mapView
+        });
+
+        map.addLayer(
+          new ol.layer.Vector({
+            source: new ol.source.Vector({
+              features: [pointerFeature]
+            })
+          })
+        )
+
+        mapView.setCenter(latlng);
+
+        function updateMapPosition (lng, lat) {
+          const auxlatlng = ol.proj.fromLonLat([lng, lat]);
+          pointerFeature.getGeometry().setCoordinates(auxlatlng);
+          mapView.setCenter(auxlatlng);
+        }
+
+        function getStream(url, newLine, done) {
+          let isClosed = false;
+          fetch(url).then(res => {
+            const reader = res.body.getReader();
+            const processNextChunk = chunk => {
+              const str = new TextDecoder("utf-8").decode(chunk.value);
+              str.split("\\n").filter(s => !!s).forEach(newLine);
+              if(chunk.done) isClosed = true;
+              return !isClosed ? reader.read().then(processNextChunk): reader.cancel().then(done);
+            }
+            reader.read().then(processNextChunk);
+          })
+          return () => isClosed = true;
+        }
+
+        getStream("/raw-gps", newline => {
+          const [date, lat, lng, speed] = newline.split(",");
+          updateMapPosition(lng, lat);
+        }, () => console.error("end of stream"));
+
+      </script>
+    </body>
+  </html>

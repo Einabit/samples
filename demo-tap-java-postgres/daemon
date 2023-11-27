@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# $1 may be undefined or defined and be equal to "mock"
+# examples:
+# ./daemon mock - will start the services using the sandbox service
+# ./daemon      - will start the services using the real api
+# --
+# CTRL+C will output postgres results for the demo and stop all services
+
+teardown() {
+  docker compose -f services.yml exec postgres psql -h localhost -U docker -d docker -c 'SELECT * FROM iot_registry;'
+  docker compose -f services.yml down
+  exit 0
+}
+
+trap 'teardown' INT
+
+if [ -n $1 ] && [ "$1" = "mock" ]; then
+  HOST=sandbox KEY="" docker compose -f services.yml up --build &
+else
+  HOST=<API_HOST> KEY=<API_KEY> docker compose -f services.yml up --scale sandbox=0 --build &
+fi
+
+while true; do
+  sleep 1
+done

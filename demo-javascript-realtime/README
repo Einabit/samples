@@ -1,0 +1,31 @@
+### JAVASCRIPT GPS DATA REALTIME
+
+Este proyecto requiere el environment de nodejs
+
+Puedes descargarlo aquí: https://nodejs.org/en
+
+Para lanzar el proyecto tienes que instalar las dependencias usando:
+
+```bash
+npm install
+```
+
+Hay dos ejemplos:
+
+Ejecutar ejemplo 1:
+
+```bash
+npm run demo-last
+```
+
+last, despliega un servidor en ::8080. Este servidor consultará las 20 últimas 
+posiciones del GPS y las pintará en el mapa que podrás visualizar usando el navegador.
+
+Ejecutar ejemplo 2:
+
+```bash
+npm run demo-tap
+```
+
+tap, despliega un servidor en el ::8080. Este servidor se subscribe a actualizaciones 
+del GPS y actualiza el mapa que podrás visualizar usando el navegador.

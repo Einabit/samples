@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+  application:
+    build:
+      context: app/
+      dockerfile: Dockerfile.app
+    environment:
+      VARIABLES: spd,tmp
+      <API_HOST>: $HOST
+      <API_KEY>: $KEY
+      DB_HOST: postgres
+      DB_USER: docker
+      DB_PASS: docker
+      DB_NAME: docker
+    depends_on:
+      sandbox:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      APP_DB_USER: docker
+      APP_DB_PASS: docker
+      APP_DB_NAME: docker
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  sandbox:
+    image: einabit/sandbox
+    environment:
+      CONFIG: |
+        tmp:
+          value:
+            min: 10
+            max: 30
+            step: 2
+          interval:
+            ms: 1200
+            skip: .5
+        spd:
+          value:
+            min: 1
+            max: 50
+            step: 1
+          interval:
+            ms: 200
+            skip: .3

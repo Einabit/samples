@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "einabit.client.js": "^2.2.4"
+  },
+  "scripts": {
+    "demo-tap": "PORT=8080 API_ADDRESS=<API_HOST> PASSPHRASE=<API_KEY> node app-tap.js",
+    "demo-last": "PORT=8080 API_ADDRESS=<API_HOST> PASSPHRASE=<API_KEY> node app-last.js"
+  }
+}

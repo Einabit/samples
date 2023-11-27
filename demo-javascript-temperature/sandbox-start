@@ -1,0 +1,2 @@
+#!/bin/sh
+docker run --rm -d -e CONFIG="$(cat sandbox.config.yml)" -p 1337:1337 --name einabit einabit/sandbox

@@ -1,0 +1,22 @@
+### JAVASCRIPT SDK QUERIES
+
+Este proyecto requiere el environment de nodejs
+
+Puedes descargarlo aquí: https://nodejs.org/en
+
+Para lanzar el proyecto tienes que instalar las dependencias usando:
+
+```bash
+npm install
+```
+
+Hay cuatro ejemplos muy simples que van a lanzar queries a la API. Cada ejemplo 
+representa un tipo de consulta.
+
+```bash
+npm run <comando>
+```
+
+Los comandos son tap, last, fetch y value.
+
+Edita los ficheros para modificar los parámetros.

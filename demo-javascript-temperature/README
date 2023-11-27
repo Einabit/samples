@@ -1,0 +1,39 @@
+### JAVASCRIPT TEMPERATURE DATA
+
+Este proyecto requiere el environment de nodejs y docker
+
+Puedes descargar nodejs aquí: https://nodejs.org/en
+Puedes descargar docker aquí: https://docs.docker.com/engine/install/
+
+##### Instalación
+
+Este proyecto utiliza varias dependencias, puedes instalarlas con:
+```bash
+npm install
+```
+
+Contenidos:
+
+```bash
+.
+├── package.json              # fichero de definiciones y dependencias de proyecto
+├── package-lock.json         # fichero de resolución de packetes
+├── README                    # .
+├── sandbox.config.yml        # configuración del sandbox
+├── sandbox-start             # script para iniciar el sandbox
+├── sandbox-stop              # script para detener el sandbox
+├── spd-api-realtime.js       # ejemplo 1, velocidad con datos reales
+├── tmp-api-history.js        # ejemplo 2, histórico temperatura con datos reales
+└── tmp-sandbox-realtime.js   # ejemplo 3, con datos falsos, requiere sandbox
+
+0 directories, 9 files
+```
+
+Para ejecutar cualquiera de los ejemplos necesitamos usar:
+
+```bash
+node <script.js>
+```
+
+El ejemplo 3 (tmp-sandbox-realtime.js) requiere una instancia del sandbox ejecutándose 
+en la misma máquina.

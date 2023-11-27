@@ -1,0 +1,16 @@
+.
+├── demo-javascript-realtime        # Este directorio contiene ejemplos de aplicaciones con mapas
+├── demo-javascript-temperature     # Este directorio contiene ejemplos sobre suscripciones
+├── demo-raw-js-samples             # Este directorio contiene ejemplos representativos de las consultas
+└── demo-tap-java-postgres          # Este directorio contiene una aplicación de Java que realiza un volcado a postres
+
+En Einabit hay múltiples soluciones a la hora de consumir nuestra pasarela de datos. 
+Podemos intregarte credenciales para conectarte a un servicio de cola como MQTT, o 
+puedes usar las diferentes opciones con nuestra pasarela de datos usando los SDKs.
+
+Puedes desarrollar tu propia implementación siguiendo esta guía:
+https://github.com/Einabit/sandbox/blob/main/DEEP_GUIDE.md
+
+Echa un vistazo a nuestros repositorios https://github.com/orgs/Einabit/repositories
+
+Para cualquier otra consulta puedes contactarnos a info@einabit.com

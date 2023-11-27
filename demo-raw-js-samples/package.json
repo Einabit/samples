@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "fetch": "node demo01 > fetch-results.csv",
+    "tap": "node demo02",
+    "last": "node demo03 > last-results.csv",
+    "value": "node demo04"
+  },
+  "dependencies": {
+    "einabit.client.js": "^2.2.4"
+  }
+}
